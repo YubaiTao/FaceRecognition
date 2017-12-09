@@ -1,0 +1,26 @@
+<component name="libraryTable">
+  <library name="org.ejml:ejml-all:0.32" type="repository">
+    <properties maven-id="org.ejml:ejml-all:0.32" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/ejml-all-0.32.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ejml-core-0.32.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ejml-fdense-0.32.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ejml-ddense-0.32.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ejml-cdense-0.32.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ejml-zdense-0.32.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ejml-dsparse-0.32.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ejml-simple-0.32.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/ejml-all-0.32-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ejml-core-0.32-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ejml-fdense-0.32-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ejml-ddense-0.32-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ejml-cdense-0.32-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ejml-zdense-0.32-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ejml-dsparse-0.32-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ejml-simple-0.32-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>
