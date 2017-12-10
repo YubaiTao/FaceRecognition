@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cf12f6ab-cbf0-4a17-8b6f-f49bb2b57fb2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Tool.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/FaceRecognition.java" afterPath="$PROJECT_DIR$/src/FaceRecognition.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test.java" afterPath="$PROJECT_DIR$/src/Test.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Training.java" afterPath="$PROJECT_DIR$/src/Training.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -308,7 +304,7 @@
       <option name="presentableId" value="Default" />
       <updated>1512853300963</updated>
       <workItem from="1512853304740" duration="610000" />
-      <workItem from="1512854512803" duration="12865000" />
+      <workItem from="1512854512803" duration="12879000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1512854211926</created>
@@ -345,11 +341,18 @@
       <option name="project" value="LOCAL" />
       <updated>1512856705278</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="update">
+      <created>1512891110652</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1512891110652</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13475000" />
+    <option name="totallyTimeSpent" value="13489000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="2560" height="1080" extended-state="0" />
