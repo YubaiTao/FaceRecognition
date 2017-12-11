@@ -1,5 +1,3 @@
-import java.io.File;
-
 /**
  * project: FaceRecognition
  *
@@ -15,13 +13,25 @@ public class Training {
     public Training() {
         tool = new Tool("./TrainingImages");
         listR = tool.listR;
-        for (int i = 0; i < tool.fileNum; i++) {
-            double[][] matrix = Tool.transform(listR[i], tool.imageHeight, tool.imageWidth);
-            String curPath = "./TestOutputs/" + tool.fileNames[i] + "_original.jpg";
-            Tool.drawImage(matrix, curPath);
+        double[] meanVector = Tool.getMean(listR);
+        System.out.println(meanVector.length);
+        double[][] A = Tool.getA(listR, meanVector);
+        double[][] transA = Tool.transpose(A);
+        double[][] L = Tool.getCov(transA);
+        double[][] V = Tool.getEigenVectors(L);
+        double[][] U = Tool.getEigenfaces(A, V);
+        double[][] Omegas = Tool.getOmegas(U, A);
+        Tool.printMatrix(U);
+
+        /* output eigenfaces */
+        double[][] transU = Tool.transpose(U);
+        for (int i = 0; i < transU.length; i++) {
+            String path = "./Outputs/eigenfaces/eigenface_" + i + ".jpg";
+            Tool.drawEigenface(transU[i], path, tool.imageHeight, tool.imageWidth);
         }
+
+
     }
 
     /* ------- Private methods ------- */
-
 }
