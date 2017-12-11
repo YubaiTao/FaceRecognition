@@ -218,6 +218,15 @@ public class Tool {
         drawImage(transform(image, height, width), path);
     }
 
+    public static double dist(double[] v1, double[] v2) {
+
+        return 0;
+    }
+
+    public static void writeMatrix(double[][] matrix, String path) {
+
+    }
+
 
 
     private int getFileNum(String directory) {
