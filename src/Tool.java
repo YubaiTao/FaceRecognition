@@ -5,6 +5,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 /**
@@ -74,6 +75,7 @@ public class Tool {
         }
     }
 
+    /* get matrix from its spanned form */
     public static double[][] transform(double[] spannedImage, int height, int width) {
         double[][] matrix = new double[height][width];
         for (int i = 0; i < height; i++) {
@@ -147,7 +149,7 @@ public class Tool {
         SwitchingEigenDecomposition_DDRM eigenDecompostion = new SwitchingEigenDecomposition_DDRM(matrixSize);
         DMatrixRMaj m = new DMatrixRMaj(matrix);
         if (eigenDecompostion.decompose(m)) {
-            System.out.println("Matrix successfully decomposed.");
+            // System.out.println("Matrix successfully decomposed.");
         } else {
             System.out.println("Matrix failed decomposition.");
         }
@@ -219,13 +221,46 @@ public class Tool {
     }
 
     public static double dist(double[] v1, double[] v2) {
-
-        return 0;
+        double dist = 0;
+        int len = v1.length;
+        for (int i = 0; i < len; i++) {
+            double diff = v1[i] - v2[i];
+            dist += diff * diff;
+        }
+        return Math.sqrt(dist / len);
     }
 
-    public static void writeMatrix(double[][] matrix, String path) {
-
+    public static void writeMatrix(double[][] matrix, String path){
+        try {
+            FileWriter fw = new FileWriter(path);
+            for (int i = 0; i < matrix.length; i++) {
+                for (int j = 0; j < matrix[0].length; j++) {
+                    fw.write(matrix[i][j] + "  ");
+                }
+                fw.write("\r\n");
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    public static void writeMatrix(double[][] matrix, String path, String[] names){
+        try {
+            FileWriter fw = new FileWriter(path);
+            for (int i = 0; i < matrix.length; i++) {
+                fw.write(names[i] + "     ");
+                for (int j = 0; j < matrix[0].length; j++) {
+                    fw.write(matrix[i][j] + "  ");
+                }
+                fw.write("\r\n");
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 

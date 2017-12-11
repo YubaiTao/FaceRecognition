@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 /**
  * project: FaceRecognition
  *
@@ -18,14 +20,25 @@ public class Training {
         tool = new Tool(directory);
         listR = tool.listR;
         double[] meanVector = Tool.getMean(listR);
-        System.out.println(meanVector.length);
         double[][] A = Tool.getA(listR, meanVector);
         double[][] transA = Tool.transpose(A);
         double[][] L = Tool.getCov(transA);
         double[][] V = Tool.getEigenVectors(L);
         U = Tool.getEigenfaces(A, V);
         Omegas = Tool.getOmegas(U, A);// [index][omega_i]
-        Tool.printMatrix(U);
+
+        writeToFile();
+    }
+
+    private void writeToFile() {
+        String pathU = "./Outputs/U.txt";
+        String pathOmega = "./Outputs/Omegas.txt";
+        Tool.writeMatrix(U, pathU);
+        Tool.writeMatrix(Omegas, pathOmega);
+
+        for (int i = 0; i < tool.fileNames.length; i++) {
+            System.out.println(tool.fileNames[i]);
+        }
 
         /* output eigenfaces */
         double[][] transU = Tool.transpose(U);
@@ -33,9 +46,6 @@ public class Training {
             String path = "./Outputs/eigenfaces/eigenface_" + i + ".jpg";
             Tool.drawEigenface(transU[i], path, tool.imageHeight, tool.imageWidth);
         }
-
-
     }
 
-    /* ------- Private methods ------- */
 }
