@@ -1,0 +1,18 @@
+subject10.normal.jpg        	10              
+subject01.normal.jpg        	1               
+subject14.sad.jpg           	14              
+subject11.happy.jpg         	11              
+subject15.normal.jpg        	15              
+subject12.normal.jpg        	unknown face    
+subject03.normal.jpg        	3               
+subject01.happy.jpg         	1               
+subject14.normal.jpg        	14              
+apple1_gray.jpg             	non-face        
+subject11.normal.jpg        	11              
+subject07.happy.jpg         	7               
+subject01.centerlight.jpg   	unknown face (WRONG)
+subject14.happy.jpg         	14              
+subject07.normal.jpg        	7               
+subject07.centerlight.jpg   	7               
+subject02.normal.jpg        	2               
+subject11.centerlight.jpg   	non-face (WRONG)

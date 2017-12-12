@@ -67,6 +67,11 @@ public class Tool {
             BufferedImage image = new BufferedImage(matrix[0].length, matrix.length, BufferedImage.TYPE_BYTE_GRAY);
             for (int i = 0; i < width; i++) {
                 for (int j = 0; j < height; j++) {
+                    if (matrix[j][i] < 0) {
+                        matrix[j][i] = 0;
+                    } else if (matrix[j][i] > 255) {
+                        matrix[j][i] = 255;
+                    }
                     Color c = new Color((int)matrix[j][i], (int)matrix[j][i], (int)matrix[j][i]);
                     image.setRGB(i, j, c.getRGB());
                 }
@@ -207,7 +212,7 @@ public class Tool {
         return omega;
     }
 
-
+    /* draw eigen face to file, the value is normalized */
     public static void drawEigenface(double[] eigenface, String path, int height, int width) {
         double min = Double.MAX_VALUE;
         double max = -Double.MAX_VALUE;
@@ -222,6 +227,7 @@ public class Tool {
         drawImage(transform(image, height, width), path);
     }
 
+    /* compute the Euclidean distance between two vectors */
     public static double dist(double[] v1, double[] v2) {
         double dist = 0;
         int len = v1.length;
@@ -232,6 +238,7 @@ public class Tool {
         return Math.sqrt(dist / len);
     }
 
+    /* write matrix to file */
     public static void writeMatrix(double[][] matrix, String path){
         try {
             FileWriter fw = new FileWriter(path);
@@ -248,6 +255,7 @@ public class Tool {
     }
 
 
+    /* write matrix to file with form of string array */
     public static void writeMatrix(String[] lines, String path) {
         try {
             FileWriter fw = new FileWriter(path);
@@ -261,6 +269,7 @@ public class Tool {
         }
     }
 
+    /* get file number ID */
     public static int getFileId(String fileName) {
         Pattern p = Pattern.compile("\\bsubject(..)\\..*");
         Matcher m = p.matcher(fileName);
@@ -268,6 +277,16 @@ public class Tool {
             return Integer.parseInt(m.group(1));
         }
         return -1;
+    }
+
+    /* get file symbol (normal;happy.etc) from file name */
+    public static String getFileSymbol(String fileName) {
+        Pattern p = Pattern.compile("\\bsubject..\\.(.*)\\.jpg");
+        Matcher m = p.matcher(fileName);
+        if (m.find()) {
+            return m.group(1);
+        }
+        return null;
     }
 
 
@@ -298,9 +317,6 @@ public class Tool {
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("No image file in the target folder");
         }
-//        for (File f : listOfFiles) {
-//            System.out.println(f.getName());
-//        }
     }
 
     private void getImageParas(String path) {

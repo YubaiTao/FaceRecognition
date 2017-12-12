@@ -6,8 +6,19 @@
 public class Test {
     Tool tool;
     double[][] listR;
+    double[][] U;
+    double[][] Omega;
+    String[] trainFileNames;
+    double[] trainMeanVector;
 
-    public Test(String directory, double[][] U, double[][] Omega, String[] trainFileNames, double T0, double T1){
+    // public Test(String directory, double[][] U, double[][] Omega, String[] trainFileNames, double T0, double T1){
+    public Test(String directory, Training training, double T0, double T1){
+
+        this.U = training.U;
+        this.Omega = training.Omegas;
+        this.trainFileNames = training.fileNames;
+        trainMeanVector = training.meanVector;
+
         tool = new Tool(directory);
         listR = tool.listR;
         double[] meanVector = Tool.getMean(listR);
@@ -16,16 +27,20 @@ public class Test {
         // []: d0 ; dj(min[di])
         double[][] result = new double[listR[0].length][3];
         for (int i = 0; i < listR[0].length; i++) {
-            result[i] = testSingle(listI[i], U, Omega);
+            result[i] = testSingle(listI[i], U, Omega, tool.fileNames[i]);
         }
 
         String d0djPath = "./Outputs/d0_dj.txt";
         Tool.writeMatrix(formatLines(result, tool.fileNames, trainFileNames), d0djPath);
-        String resultPath = "./Outputs/result.txt";
+        String resultPath = "./Outputs/inter_result" + "_T0:" + (int)T0 + "_T1:" + (int)T1 + ".txt";
         Tool.writeMatrix(formatLines(result, tool.fileNames, trainFileNames, T0, T1), resultPath);
+        String finalResultPath = "./Outputs/final_result" + "_T0:" + (int)T0 + "_T1:" + (int)T1 + ".txt";
+        Tool.writeMatrix(formatLines(result, tool.fileNames, trainFileNames, T0, T1, true), finalResultPath);
+
     }
 
-    private double[] testSingle(double[] I, double[][] U, double[][] Omega) {
+    /* face recognition on single image */
+    private double[] testSingle(double[] I, double[][] U, double[][] Omega, String fileName) {
         double[] result = new double[3];// 0: d0 ; 1: dj(min among di) ; 2: index
         // OmegaI = U_trans * I_bar
         double[][] transU = Tool.transpose(U);
@@ -33,6 +48,16 @@ public class Test {
 
         // IR = U * OmegaI
         double[] IR = Tool.getOmega(U, Omega_I);
+        double[] IR_recons = new double[IR.length];
+        // add mean face
+        for (int i = 0; i < IR.length; i++) {
+            IR_recons[i] = IR[i] + trainMeanVector[i];
+        }
+        double[][] matrixIR = Tool.transform(IR_recons, tool.imageHeight, tool.imageWidth);
+        String pathIR = "./Outputs/reconstructed_faces/reconstructed_face_" + Tool.getFileId(fileName)
+                + "_" + Tool.getFileSymbol(fileName)+ ".jpg";
+        Tool.drawImage(matrixIR, pathIR);
+
         // d0 = dist(IR - I_bar)
         double d0 = Tool.dist(I, IR);
         // dj = min{ di = dist(OmegaI - Omega_i) }
@@ -44,7 +69,6 @@ public class Test {
                 index = i;
                 dj = di;
             }
-            // dj = Math.min(di, dj);
         }
         result[0] = d0;
         result[1] = dj;
@@ -76,7 +100,36 @@ public class Test {
 
             lines[i] = line;
         }
-
         return lines;
+    }
+
+    private String[] formatLines(double[][] result, String[] testFileNames, String[] trainFileNames, double T0, double T1, boolean sign) {
+        String[] lines = new String[result.length];
+        for (int i = 0; i < lines.length; i++) {
+            boolean isMatch = Tool.getFileId(testFileNames[i]) == Tool.getFileId(trainFileNames[(int)result[i][2]]);
+            boolean isRej = result[i][0] > T0;
+            boolean isReco = result[i][1] < T1;
+            String state = getState(isMatch, isRej, isReco, Tool.getFileId(trainFileNames[(int)result[i][2]]));
+            String line = String.format("%-28s\t%-16s",
+                    testFileNames[i], state);
+
+            lines[i] = line;
+        }
+        return lines;
+    }
+
+    private String getState(boolean isMatch, boolean isRej, boolean isReco, int ID) {
+        if (isRej) {
+            return isMatch?"non-face (WRONG)":"non-face";
+        }
+        if (isReco) {
+            if (isMatch) {
+                return Integer.toString(ID);
+            } else {
+                return Integer.toString(ID) + " (WRONG)";
+            }
+        } else {
+            return isMatch?"unknown face (WRONG)":"unknown face";
+        }
     }
 }

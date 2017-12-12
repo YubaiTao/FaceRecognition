@@ -8,8 +8,12 @@ public class Training {
     Tool tool;
     String[] fileNames;
 
+
+
     // [number of training images][N * N(spanned image)]
     double[][] listR;
+
+    double[] meanVector;
 
     // U and Omegas need to pass to Test
     double[][] U;
@@ -21,7 +25,7 @@ public class Training {
         tool = new Tool(directory);
         listR = tool.listR;
         fileNames = tool.fileNames;
-        double[] meanVector = Tool.getMean(listR);
+        meanVector = Tool.getMean(listR);
         double[][] A = Tool.getA(listR, meanVector);
         double[][] transA = Tool.transpose(A);
         double[][] L = Tool.getCov(transA);
@@ -38,9 +42,9 @@ public class Training {
         Tool.writeMatrix(U, pathU);
         Tool.writeMatrix(Omegas, pathOmega);
 
-        for (int i = 0; i < tool.fileNames.length; i++) {
-            System.out.println(tool.fileNames[i]);
-        }
+//        for (int i = 0; i < tool.fileNames.length; i++) {
+//            System.out.println(tool.fileNames[i]);
+//        }
 
         /* output eigenfaces */
         double[][] transU = Tool.transpose(U);
