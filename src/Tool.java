@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * project: FaceRecognition
@@ -245,20 +247,27 @@ public class Tool {
         }
     }
 
-    public static void writeMatrix(double[][] matrix, String path, String[] names){
+
+    public static void writeMatrix(String[] lines, String path) {
         try {
             FileWriter fw = new FileWriter(path);
-            for (int i = 0; i < matrix.length; i++) {
-                fw.write(names[i] + "     ");
-                for (int j = 0; j < matrix[0].length; j++) {
-                    fw.write(matrix[i][j] + "  ");
-                }
+            for (int i = 0; i < lines.length; i++) {
+                fw.write(lines[i]);
                 fw.write("\r\n");
             }
             fw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static int getFileId(String fileName) {
+        Pattern p = Pattern.compile("\\bsubject(..)\\..*");
+        Matcher m = p.matcher(fileName);
+        if (m.find()) {
+            return Integer.parseInt(m.group(1));
+        }
+        return -1;
     }
 
 

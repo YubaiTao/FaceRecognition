@@ -1,4 +1,3 @@
-import java.io.IOException;
 
 /**
  * project: FaceRecognition
@@ -7,6 +6,8 @@ import java.io.IOException;
  */
 public class Training {
     Tool tool;
+    String[] fileNames;
+
     // [number of training images][N * N(spanned image)]
     double[][] listR;
 
@@ -19,6 +20,7 @@ public class Training {
     public Training(String directory) {
         tool = new Tool(directory);
         listR = tool.listR;
+        fileNames = tool.fileNames;
         double[] meanVector = Tool.getMean(listR);
         double[][] A = Tool.getA(listR, meanVector);
         double[][] transA = Tool.transpose(A);
